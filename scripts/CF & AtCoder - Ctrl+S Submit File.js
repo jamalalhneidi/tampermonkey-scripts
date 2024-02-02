@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  CTRL+S Submit File
 // @author       You
-// @match        https://codeforces.com/*
+// @match        https://*.codeforces.com/*
 // @match        https://atcoder.jp/*
 // @grant        none
 // ==/UserScript==
@@ -12,7 +12,7 @@
 const CODEFORCES = "codeforces";
 const ATCODER = "atcoder";
 
-const hostname = window.location.hostname.split('.')[0];
+const hostname = window.location.hostname;
 
 const getCodeforcesControls = () => ({
     file: document.getElementsByName('sourceFile')[0],
@@ -26,8 +26,8 @@ const getAtcoderControls = () => ({
 })
 
 const getControls = () => {
-    if (hostname === CODEFORCES) return getCodeforcesControls();
-    else if (hostname === ATCODER) return getAtcoderControls();
+    if (hostname.includes(CODEFORCES)) return getCodeforcesControls();
+    else if (hostname.includes(ATCODER)) return getAtcoderControls();
     return { file: null, submit: null };
 };
 
