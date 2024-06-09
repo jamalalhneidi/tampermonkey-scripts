@@ -2,7 +2,7 @@
 // @name         AtCoder - Enhancer
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  Hover tasks tab for a dropdown menu of problems. Click on Results to go to my submissions
+// @description  Hover tasks tab for a dropdown menu of problems. Hover results tab to show dropdown menu.
 // @author       You
 // @match        https://atcoder.jp/contests/*
 // @require      file:\\wsl$\Ubuntu\root\tampermonkey-scripts\scripts\AtCoder - Enhancer.js
