@@ -6,7 +6,7 @@
 // @author       You
 // @match        https://codeforces.com/problemset*
 // @exclude      https://codeforces.com/problemset/problem*
-// @icon         
+// @icon
 // @grant        none
 // ==/UserScript==
 
@@ -17,15 +17,14 @@ const init = async () => {
     const url = `https://codeforces.com/api/problemset.problems`;
     const res = await fetch(url);
     const data = await res.json();
-    if (data.status != "OK") return;
+    if (data.status != 'OK') return;
     problems = data.result.problems;
-}
-
+};
 
 const getRating = async (contestId, index) => {
-    const problem = problems.find(p => `${p.contestId}` === `${contestId}` && `${p.index}` === `${index}`);
+    const problem = problems.find((p) => `${p.contestId}` === `${contestId}` && `${p.index}` === `${index}`);
     return problem?.rating;
-}
+};
 
 const getRatingList = async (problemIds) => {
     const res = {};
@@ -37,24 +36,24 @@ const getRatingList = async (problemIds) => {
         res[text] = rating;
     }
     return res;
-}
+};
 
 const extractProblemIds = (rows) => {
-    const res = []
+    const res = [];
     for (const row of rows) {
         res.push(row.cells[0].textContent);
     }
     res.shift();
     return res;
-}
+};
 
 const updateUI = (rows, rating) => {
-    rows[0].insertCell(-1).outerHTML = "<th>Rating</th>";
+    rows[0].insertCell(-1).outerHTML = '<th>Rating</th>';
     for (let i = 1; i < rows.length; i++) {
         rows[i].insertCell(-1);
         rows[i].cells[3].textContent = rating[rows[i].cells[0].textContent];
     }
-}
+};
 
 (async function () {
     'use strict';
@@ -66,5 +65,4 @@ const updateUI = (rows, rating) => {
     const problemIds = extractProblemIds(rows);
     const rating = await getRatingList(problemIds);
     updateUI(rows, rating);
-
 })();

@@ -14,27 +14,27 @@
 const pathname = window.location.pathname;
 const cache = {};
 const VERDICT_COLOR = {
-    AC: "rgb(64, 255, 64)",
-    WA: "rgb(255, 0, 0)",
-    NA: "#0d9aff",
+    AC: 'rgb(64, 255, 64)',
+    WA: 'rgb(255, 0, 0)',
+    NA: '#0d9aff',
 };
 
 const getUserHandle = () => {
     if (cache.userHandle) return cache.userHandle;
-    return cache.userHandle = document.getElementById('header').querySelector("a[href^='/profile']").textContent;
-}
+    return (cache.userHandle = document.getElementById('header').querySelector("a[href^='/profile']").textContent);
+};
 const getContestNumber = () => {
     if (cache.contestNumber) return cache.contestNumber;
     let contestNumber;
     if (pathname.startsWith('/contest/')) contestNumber = pathname.split('/')[2];
     else if (pathname.startsWith('/problemset/')) contestNumber = pathname.split('/')[3];
     else if (pathname.startsWith('/gym')) contestNumber = pathname.split('/')[2];
-    return cache.contestNumber = contestNumber;
-}
+    return (cache.contestNumber = contestNumber);
+};
 
 const buildProblemUrl = (index) => {
-    return `https://codeforces.com/${pathname.includes('gym') ? 'gym' : 'contest'}/${getContestNumber()}/problem/${index}`
-}
+    return `https://codeforces.com/${pathname.includes('gym') ? 'gym' : 'contest'}/${getContestNumber()}/problem/${index}`;
+};
 
 const attachVerdict = async (problems) => {
     const problemsWithVerdicts = [...problems];
@@ -57,7 +57,7 @@ const attachVerdict = async (problems) => {
         p.verdict = verdicts[p.index];
     }
     return problemsWithVerdicts;
-}
+};
 
 const fetchProblems = async (contestNumber) => {
     const requestURL = `https://codeforces.com/api/contest.standings?contestId=${contestNumber}&from=1&count=1`;
@@ -66,20 +66,18 @@ const fetchProblems = async (contestNumber) => {
         const response = await fetch(requestURL);
         const data = await response.json();
         const problemsList = data.result.problems;
-        if (data.status == "OK") {
+        if (data.status == 'OK') {
             for (let i = 0; i < problemsList.length; i++) {
                 const index = problemsList[i].index;
-                const title = index + " - " + problemsList[i].name;
+                const title = index + ' - ' + problemsList[i].name;
                 const rating = problemsList[i].rating;
                 const problemUrl = buildProblemUrl(index);
                 problems.push({ index: index, url: problemUrl, title: title, rating: rating });
             }
         }
-    }
-    catch (e) {
-    }
+    } catch (e) {}
     return attachVerdict(problems);
-}
+};
 
 const updateUI = (problems) => {
     let toInsert;
@@ -103,23 +101,23 @@ const updateUI = (problems) => {
                     </div>
                     <div id="Tagblock" style="display: block;">
                     <div style="display: flex; margin: 8px auto; flex-wrap: wrap; justify-content: center; align-items: center; text-align: center;">
-                `
-    problems.forEach(e => {
+                `;
+    problems.forEach((e) => {
         toInsert += `
                 <span style="width:3em; margin: 2px; text-align: center; box-sizing: border-box;">
                     <a title="${e.title}" href="${e.url}" style="color:${e.verdict}">${e.index}</a>
                     <br><span class="small" title="Problem Rating">${e.rating == null ? '-' : e.rating}</span>
                 </span>
-                `
+                `;
     });
-    toInsert += '</div></div>'
-    const getProblemBox = document.createElement("div");
+    toInsert += '</div></div>';
+    const getProblemBox = document.createElement('div');
     getProblemBox.innerHTML = toInsert;
-    document.querySelector("#sidebar").prepend(getProblemBox);
-}
+    document.querySelector('#sidebar').prepend(getProblemBox);
+};
 
 (async function () {
-    console.log("Adding a table of links of the current contest's problems")
+    console.log("Adding a table of links of the current contest's problems");
     const contestNumber = getContestNumber();
     if (!contestNumber) return;
     const problems = await fetchProblems(contestNumber);

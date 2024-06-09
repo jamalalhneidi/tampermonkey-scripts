@@ -9,21 +9,20 @@
 // @grant        none
 // ==/UserScript==
 
-const CODEFORCES = "codeforces";
-const ATCODER = "atcoder";
+const CODEFORCES = 'codeforces';
+const ATCODER = 'atcoder';
 
 const hostname = window.location.hostname;
 
 const getCodeforcesControls = () => ({
     file: document.getElementsByName('sourceFile')[0],
-    submit: document.getElementById('sidebarSubmitButton')
-})
-
+    submit: document.getElementById('sidebarSubmitButton'),
+});
 
 const getAtcoderControls = () => ({
     file: document.getElementById('input-open-file'),
     submit: document.getElementById('submit'),
-})
+});
 
 const getControls = () => {
     if (hostname.includes(CODEFORCES)) return getCodeforcesControls();
@@ -35,7 +34,7 @@ const getControls = () => {
     'use strict';
     const { file, submit } = getControls();
     if (!file) return;
-    window.addEventListener('keydown', e => {
+    window.addEventListener('keydown', (e) => {
         if (e.key == 's' && e.ctrlKey) {
             e.preventDefault();
             if (file.value) submit.click();
