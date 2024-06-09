@@ -8,6 +8,7 @@
 // @exclude      https://codeforces.com/problemset/problem*
 // @icon
 // @grant        none
+// @require      file:\\wsl$\Ubuntu\root\tampermonkey-scripts\scripts\CF - Get rating for unsloved.js
 // ==/UserScript==
 
 let problems;

@@ -9,6 +9,7 @@
 // @match        https://codeforces.com/problemset/problem/*
 // @match        https://codeforces.com/problemset/gymProblem/*
 // @match        https://codeforces.com/gym/*
+// @require      file:\\wsl$\Ubuntu\root\tampermonkey-scripts\scripts\CF - Problems Links on Problem Pages.js
 // ==/UserScript==
 
 const pathname = window.location.pathname;

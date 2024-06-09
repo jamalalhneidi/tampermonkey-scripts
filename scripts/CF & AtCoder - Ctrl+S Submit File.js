@@ -7,6 +7,7 @@
 // @match        https://*.codeforces.com/*
 // @match        https://atcoder.jp/*
 // @grant        none
+// @require      file:\\wsl$\Ubuntu\root\tampermonkey-scripts\scripts\CF & AtCoder - Ctrl+S Submit File.js
 // ==/UserScript==
 
 const CODEFORCES = 'codeforces';
