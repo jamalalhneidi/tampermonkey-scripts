@@ -37,8 +37,15 @@ const getControls = () => {
     window.addEventListener('keydown', (e) => {
         if (e.key == 's' && e.ctrlKey) {
             e.preventDefault();
-            if (file.value) submit.click();
-            else file.click();
+            if (!file.value) {
+                file.click();
+                return;
+            }
+            if (hostname.includes(CODEFORCES)) return submit.click();
+            if (!document.getElementsByClassName('ace_layer ace_text-layer')[0].childNodes[0].childElementCount) {
+                file.value = '';
+                file.click();
+            } else submit.click();
         }
     });
 })();
