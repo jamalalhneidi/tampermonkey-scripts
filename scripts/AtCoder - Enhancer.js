@@ -18,7 +18,10 @@ const fetchProblems = async () => {
     const tableBody = doc.getElementsByTagName('table')[0].childNodes[3];
     const list = [];
     for (const el of tableBody.children) {
-        list.push(`${el.children[0].textContent} - ${el.children[1].textContent}`);
+        list.push({
+            name: `${el.children[0].textContent} - ${el.children[1].textContent}`,
+            url: el.children[0].children[0].href,
+        });
     }
     return list;
 };
@@ -43,11 +46,11 @@ const setupTasksHover = async (el) => {
     const problems = await fetchProblems();
     const ul = document.createElement('ul');
     ul.classList.add('dropdown-menu');
-    for (const problem of problems) {
+    for (const { name, url } of problems) {
         const li = document.createElement('li');
         const a = document.createElement('a');
-        a.textContent = problem;
-        a.href = `/contests/${contestId}/tasks/${contestId}_${problem[0].toLowerCase(0)}`;
+        a.textContent = name;
+        a.href = url;
         li.appendChild(a);
         ul.appendChild(li);
     }
